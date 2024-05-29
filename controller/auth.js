@@ -5,15 +5,18 @@ require("dotenv").config();
 //importo i middleware
 const errorDetector = require("../middlewares/errorsDetector");
 
+//importo users
+const users = require("../data/users.json");
+
 //imposto il metodo per creare un token d'accesso
 const createLoginToken = user => {
     const payload = user;
-    const token = jwt.sign(payload, process.env.AUTH_KEY, { expiresIn: '1m' });
+    const token = jwt.sign(payload, process.env.AUTH_KEY, { expiresIn: '5m' });
     return token
 }
 
 //imposto il metodo di accesso alla creation di un post
-const createPost = (req, res, next) => {
+const authentication = (req, res, next) => {
 
     // recupero il token di autenticazione dalla request
     const authToken = req.headers.authorization;
@@ -40,7 +43,25 @@ const createPost = (req, res, next) => {
     });
 }
 
+const isAdmin = (req, res, next) => {
+
+    const { username, password } = req.user
+
+    // verifico che lo user autenticato corrisponda nel db
+    const user = users.find(user => user.username === username && user.password === password);
+
+    //verifico che abbia lo status di admin
+    if (!user || !user.admin) {
+        err.message = "Non hai i permessi per accedere a questa pagina"
+        err.status = 401;
+        return errorDetector(err, req, res, next)
+    };
+
+    next()
+}
+
 module.exports = {
-    createPost,
-    createLoginToken
+    authentication,
+    createLoginToken,
+    isAdmin
 }

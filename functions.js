@@ -34,7 +34,7 @@ const updatePosts = (newPosts) => {
 }
 
 const deleteFile = (fileName) => {
-    const filePath = path.join(__dirname, '../public/img', fileName);
+    const filePath = path.join(__dirname, '../express-blog-auth/public/img', fileName);
     fs.unlinkSync(filePath);
 }
 

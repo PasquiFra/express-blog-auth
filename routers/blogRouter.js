@@ -12,8 +12,8 @@ const uploader = multer({ dest: "public/img" });
 // Questo è il router di /posts
 
 router.get("/", blogController.index);
-router.post("/", uploader.single("image"), authController.createPost, blogController.create);
+router.post("/", uploader.single("image"), authController.authentication, blogController.create);
 router.get("/:slug", blogController.show);
-router.delete("/:slug", isPostExisting, blogController.destroy);
+router.delete("/:slug", isPostExisting, authController.authentication, authController.isAdmin, blogController.destroy);
 
 module.exports = router;
