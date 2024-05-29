@@ -88,6 +88,8 @@ const create = (request, response) => {
 
     const { title, slug, content, tags } = request.body
 
+    console.log(request.body)
+
     // TODO: validazione completa dei dati in arrivo!
     if (!title || !slug || !content) {
         request.file?.filename && deleteFile(request.file.filename);

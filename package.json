@@ -4,7 +4,7 @@
   "description": "Setting authentication with express.js",
   "main": "app.js",
   "scripts": {
-    "dev": "app.js"
+    "dev": "nodemon app.js"
   },
   "keywords": [],
   "author": "",
