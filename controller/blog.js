@@ -116,12 +116,9 @@ const create = (request, response) => {
 
 const destroy = (request, response) => {
 
-    const { slug } = request.params;
+    //recupero il post da eliminare dalla request
+    const { postToDelete } = request
 
-    const postToDelete = posts.find(post => post.slug === slug);
-    if (!postToDelete) {
-        return response.status(404).send('Il post da cancellare non è stato trovato')
-    }
     filteredPosts = posts.filter(post => post.slug != postToDelete.slug);
     updatePosts(filteredPosts);
     deleteFile(postToDelete.image);
