@@ -8,7 +8,7 @@ const errorDetector = require("../middlewares/errorsDetector");
 //imposto il metodo per creare un token d'accesso
 const createLoginToken = user => {
     const payload = user;
-    const token = jwt.sign(payload, process.env.AUTH_KEY, { expiresIn: '1h' });
+    const token = jwt.sign(payload, process.env.AUTH_KEY, { expiresIn: '1m' });
     return token
 }
 
@@ -29,7 +29,7 @@ const createPost = (req, res, next) => {
     //? Il metodo verify mi restituirà il payload del token, contenente i dati codificati nel token al momento della sua creazione.
     jwt.verify(token, process.env.AUTH_KEY, (err, user) => {
         if (err) {
-            err.message = "Autenticazione fallita, effettua nuovamente il login"
+            err.message == "jwt expired" ? err.message = "token scaduto" : err.message = "Autenticazione fallita, effettua il login"
             err.status = 401;
             return errorDetector(err, req, res, next)
         }
