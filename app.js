@@ -6,8 +6,9 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
-// import dei router
+// import dei router e controller
 const blogRouter = require("./routers/blogRouter.js");
+const loginController = require("./controller/login.js");
 
 // Import dei middlewares:
 // Logger delle rotte in cui si entra
@@ -37,7 +38,9 @@ app.use(routersLogger);
 app.get('/', (req, res) => {
     const filePath = path.join(__dirname, './index.html');
     res.sendFile(filePath);
-})
+});
+
+app.post("/login", loginController);
 
 app.use('/posts', blogRouter);
 
