@@ -4,8 +4,6 @@ const users = require("../data/users.json");
 
 const login = (req, res) => {
 
-    console.log(req.body)
-
     //dichiaro le variabili ricevute nella richiesta
     const { username, password } = req.body;
     // verifico la corrispondenza dei dati nel mio database
